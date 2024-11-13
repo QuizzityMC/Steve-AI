@@ -263,7 +263,6 @@ button:hover {
     text-align: left;
 }
 
-/* Add keyframes for fade-in animation */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
