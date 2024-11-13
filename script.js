@@ -1,35 +1,20 @@
-document.getElementById('send-button').addEventListener('click', sendMessage);
-document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-document.getElementById('start-voice').addEventListener('click', () => {
-    recognition.start();
-});
-document.getElementById('stop-voice').addEventListener('click', () => {
-    recognition.stop();
-});
-document.querySelector('emoji-picker').addEventListener('emoji-click', event => {
-    const emoji = event.detail.unicode;
-    document.getElementById('user-input').value += emoji;
-});
-document.getElementById('gif-button').addEventListener('click', openGifModal);
-document.querySelector('.close').addEventListener('click', closeGifModal);
-document.getElementById('gif-results').addEventListener('click', selectGif);
-
-const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-const synth = window.speechSynthesis;
-const apiKey = 'YOUR_GIPHY_API_KEY';
-
-recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    document.getElementById('user-input').value = transcript;
+document.getElementById('send-button').addEventListener('click', () => {
+    console.log('Send button clicked');
     sendMessage();
-};
+    saveToLocalStorage();
+});
 
-recognition.onerror = (event) => {
-    console.error(event.error);
-};
+document.getElementById('theme-toggle').addEventListener('click', () => {
+    console.log('Theme toggle clicked');
+    toggleTheme();
+    saveToLocalStorage();
+});
+
+document.getElementById('theme-selector').addEventListener('change', changeTheme);
 
 function sendMessage() {
     const userInput = document.getElementById('user-input').value;
+    console.log('User input:', userInput);
     if (userInput) {
         appendMessage(userInput, 'user-message');
         document.getElementById('user-input').value = '';
@@ -42,16 +27,10 @@ function sendMessage() {
     }
 }
 
-function checkEnter(event) {
-    if (event.key === 'Enter') {
-        sendMessage();
-    }
-}
-
 function appendMessage(text, className) {
     const messageBox = document.createElement('div');
     messageBox.className = `message ${className}`;
-    messageBox.innerHTML = text;
+    messageBox.innerText = text;
     document.getElementById('chat-box').appendChild(messageBox);
     messageBox.scrollIntoView();
 }
@@ -119,7 +98,6 @@ function respondToUser(input) {
     }
 
     appendMessage(response, 'bot-message');
-    speak(response);
 }
 
 function containsSwearWords(input) {
@@ -134,17 +112,21 @@ function toggleTheme() {
     themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌜' : '🌞';
 }
 
-// Save chat history and theme preference
 function saveToLocalStorage() {
-    const chatHistory = document.getElement
+    const chatHistory = document.getElementById('chat-box').innerHTML;
+    localStorage.setItem('chatHistory', chatHistory);
+    localStorage.setItem('theme', document.getElementById('theme-selector').value);
+}
+
+function loadFromLocalStorage() {
+    const savedChatHistory = localStorage.getItem('chatHistory');
     if (savedChatHistory) {
         document.getElementById('chat-box').innerHTML = savedChatHistory;
     }
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        document.querySelector('.chat-container').classList.add('dark-mode');
-        document.getElementById('theme-toggle').textContent = '🌜';
+    if (savedTheme) {
+        document.getElementById('theme-selector').value = savedTheme;
+        changeTheme();
     }
 }
 
@@ -152,18 +134,10 @@ window.onload = function() {
     loadFromLocalStorage();
 };
 
-document.getElementById('send-button').addEventListener('click', () => {
-    sendMessage();
-    saveToLocalStorage();
-});
-
-document.getElementById('theme-toggle').addEventListener('click', () => {
-    toggleTheme();
-    saveToLocalStorage();
-});
-
 function showTypingIndicator() {
     document.getElementById('typing-indicator').style.display = 'block';
 }
 
-function hideTypingIndicator
+function hideTypingIndicator() {
+    document.getElementById('typing-indicator').style.display = 'none';
+}
