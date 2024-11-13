@@ -15,8 +15,6 @@
         <option value="blue">Blue</option>
         <option value="green">Green</option>
     </select>
-    <button id="start-voice">🎤</button>
-    <button id="stop-voice">🛑</button>
     <div class="chat-container">
         <div class="chat-box" id="chat-box">
             <div class="message bot-message">Hello! I'm Steve, your friendly AI. How can I help you today?</div>
@@ -25,14 +23,7 @@
         <div class="input-container">
             <input type="text" id="user-input" placeholder="Type a message..." onkeypress="checkEnter(event)">
             <button id="send-button"><img src="send-icon.png" alt="Send"></button>
-            <button id="gif-button">GIF</button>
             <emoji-picker></emoji-picker>
-        </div>
-        <div id="gif-modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div id="gif-results"></div>
-            </div>
         </div>
     </div>
     <script src="script.js"></script>
