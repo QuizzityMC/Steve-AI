@@ -133,3 +133,138 @@ button:hover {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #f00, #0f0, #00f, #f0f);
+    background-size: 400% 400%;
+    animation: neonPulse 10s ease infinite;
+    z-index: -1;
+}
+
+@keyframes neonPulse {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body.dark-mode {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.chat-container {
+    width: 500px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+.chat-container.dark-mode {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.chat-box {
+    height: 400px;
+    padding: 20px;
+    overflow-y: auto;
+    transition: color 0.3s ease;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.bot-message {
+    background-color: rgba(255, 255, 255, 0.7);
+    text-align: left;
+}
+
+.user-message {
+    background-color: #0084ff;
+    color: #fff;
+    text-align: right;
+}
+
+#user-input {
+    width: calc(100% - 70px);
+    padding: 10px;
+    border: none;
+    border-top: 1px solid #ddd;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: inherit;
+}
+
+button {
+    border-radius: 15px;
+    padding: 10px 20px;
+    background-color: #0084ff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #006bbf;
+}
+
+#send-button {
+    width: 70px;
+    padding: 10px;
+}
+
+#send-button img {
+    width: 20px;
+    height: 20px;
+}
+
+#theme-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#theme-toggle:hover {
+    color: #006bbf;
+}
+
+.typing-indicator {
+    display: none;
+    font-style: italic;
+    color: #888;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Add keyframes for fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
