@@ -91,3 +91,11 @@ body.dark-mode {
 #theme-toggle:hover {
     color: #006bbf;
 }
+
+.typing-indicator {
+    display: none;
+    font-style: italic;
+    color: #888;
+    padding: 10px;
+    text-align: left;
+}
