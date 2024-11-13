@@ -104,7 +104,7 @@ function respondToUser(input) {
 }
 
 function containsSwearWords(input) {
-    const swearWords = ['b****', 'f***', 'f******', 'c***', 's***', 'n****', 'c****', 'w****', 's***', 'd***', 'p****', 'm**********', 'f****', 'b******', 'a**', 'd*******', 'd*****', 'w****', 'c***** p****'];
+    const swearWords = ['bitch', 'fuck', 'fucking', 'cunt', 'shit', 'nigga', 'chink', 'whore', 'slut', 'dick', 'pussy', 'motherfucker' , 'fucker', 'bullshit', 'ass' , 'dickhead' , 'dumbass' , 'wanker', 'cotton picker'];
     return swearWords.some(swearWord => input.includes(swearWord));
 }
 
