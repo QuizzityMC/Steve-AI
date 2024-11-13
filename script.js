@@ -85,6 +85,7 @@ function respondToUser(input) {
     } else if (input.includes('travel') || input.includes('vacation') || input.includes('trip')) {
         response = 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?';
     } else if (input.includes('movie') || input.includes('film') || input.includes('cinema')) {
+        response = 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?';
     }
 
     appendMessage(response, 'bot-message');
