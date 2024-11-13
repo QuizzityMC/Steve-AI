@@ -97,14 +97,12 @@ function respondToUser(input) {
         response = 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?';
     } else if (input.includes('book') || input.includes('read') || input.includes('literature')) {
         response = 'Reading is a great way to escape reality and immerse yourself in a different world. What’s your favourite book?';
-    } else if (input.includes('sorry') || input.includes('apologize') || input.includes('forgive me')) {
-        response = 'No need to apologize, we all make mistakes. Let’s move forward with a positive attitude!';
-
+    }
     appendMessage(response, 'bot-message');
 }
 
 function containsSwearWords(input) {
-    const swearWords = ['bitch', 'fuck', 'fucking', 'cunt', 'shit', 'nigga', 'chink', 'whore', 'slut', 'dick', 'pussy', 'motherfucker' , 'fucker', 'bullshit', 'ass' , 'dickhead' , 'dumbass' , 'wanker', 'cotton picker'];
+    const swearWords = ['b****', 'f***', 'f******', 'c***', 's***', 'n****', 'c****', 'w****', 's***', 'd***', 'p****', 'm**********', 'f****', 'b******', 'a**', 'd*******', 'd*****', 'w****', 'c***** p****'];
     return swearWords.some(swearWord => input.includes(swearWord));
 }
 

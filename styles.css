@@ -6,17 +6,37 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #f00, #0f0, #00f, #f0f);
+    background-size: 400% 400%;
+    animation: neonPulse 10s ease infinite;
+    z-index: -1;
+}
+
+@keyframes neonPulse {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 body.dark-mode {
-    background-color: #1e1e1e;
+    background-color: #333333;
     color: #ffffff;
 }
 
 .chat-container {
     width: 500px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -24,7 +44,7 @@ body.dark-mode {
 }
 
 .chat-container.dark-mode {
-    background-color: #333333;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .chat-box {
@@ -42,7 +62,7 @@ body.dark-mode {
 }
 
 .bot-message {
-    background-color: #e0e0e0;
+    background-color: rgba(255, 255, 255, 0.7);
     text-align: left;
 }
 
@@ -58,6 +78,8 @@ body.dark-mode {
     border: none;
     border-top: 1px solid #ddd;
     box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: inherit;
 }
 
 button {
