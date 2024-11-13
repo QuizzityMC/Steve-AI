@@ -78,14 +78,23 @@ body.green-mode {
     box-sizing: border-box;
 }
 
-#send-button {
-    width: 70px;
-    padding: 10px;
+button {
+    border-radius: 15px;
+    padding: 10px 20px;
     background-color: #0084ff;
     color: #fff;
     border: none;
     cursor: pointer;
-    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #006bbf;
+}
+
+#send-button {
+    width: 70px;
+    padding: 10px;
 }
 
 #send-button img {
@@ -93,8 +102,16 @@ body.green-mode {
     height: 20px;
 }
 
-#send-button:hover {
-    background-color: #006bbf;
+#theme-toggle, #gif-button, #start-voice, #stop-voice {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+#start-voice, #stop-voice {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
 }
 
 #theme-toggle {
