@@ -1,5 +1,32 @@
 document.getElementById('send-button').addEventListener('click', sendMessage);
 document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+document.getElementById('start-voice').addEventListener('click', () => {
+    recognition.start();
+});
+document.getElementById('stop-voice').addEventListener('click', () => {
+    recognition.stop();
+});
+document.querySelector('emoji-picker').addEventListener('emoji-click', event => {
+    const emoji = event.detail.unicode;
+    document.getElementById('user-input').value += emoji;
+});
+document.getElementById('gif-button').addEventListener('click', openGifModal);
+document.querySelector('.close').addEventListener('click', closeGifModal);
+document.getElementById('gif-results').addEventListener('click', selectGif);
+
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+const synth = window.speechSynthesis;
+const apiKey = 'YOUR_GIPHY_API_KEY';
+
+recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    document.getElementById('user-input').value = transcript;
+    sendMessage();
+};
+
+recognition.onerror = (event) => {
+    console.error(event.error);
+};
 
 function sendMessage() {
     const userInput = document.getElementById('user-input').value;
@@ -24,7 +51,7 @@ function checkEnter(event) {
 function appendMessage(text, className) {
     const messageBox = document.createElement('div');
     messageBox.className = `message ${className}`;
-    messageBox.innerText = text;
+    messageBox.innerHTML = text;
     document.getElementById('chat-box').appendChild(messageBox);
     messageBox.scrollIntoView();
 }
@@ -92,6 +119,7 @@ function respondToUser(input) {
     }
 
     appendMessage(response, 'bot-message');
+    speak(response);
 }
 
 function containsSwearWords(input) {
@@ -108,14 +136,7 @@ function toggleTheme() {
 
 // Save chat history and theme preference
 function saveToLocalStorage() {
-    const chatHistory = document.getElementById('chat-box').innerHTML;
-    localStorage.setItem('chatHistory', chatHistory);
-    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-}
-
-// Load chat history and theme preference
-function loadFromLocalStorage() {
-    const savedChatHistory = localStorage.getItem('chatHistory');
+    const chatHistory = document.getElement
     if (savedChatHistory) {
         document.getElementById('chat-box').innerHTML = savedChatHistory;
     }
