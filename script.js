@@ -98,7 +98,7 @@ function respondToUser(input) {
     } else if (input.includes('book') || input.includes('read') || input.includes('literature')) {
         response = 'Reading is a great way to escape reality and immerse yourself in a different world. What’s your favourite book?';
     } else if (input.includes('sorry') || input.includes('apologize') || input.includes('forgive me')) {
-        res[onse = 'No need to apologize, we all make mistakes. Let’s move forward with a positive attitude!';]
+        response = 'No need to apologize, we all make mistakes. Let’s move forward with a positive attitude!';
 
     appendMessage(response, 'bot-message');
 }
