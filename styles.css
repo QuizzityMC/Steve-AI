@@ -1,15 +1,12 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #000;
+    background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     transition: background-color 0.3s ease;
-    background-image: url('neon-lines.png'); /* Make sure to replace this with the actual path to your neon lines image */
-    background-size: cover;
-    color: #fff;
 }
 
 body.dark-mode {
@@ -17,35 +14,17 @@ body.dark-mode {
     color: #ffffff;
 }
 
-body.blue-mode {
-    background-color: #e0f7fa;
-    color: #01579b;
-}
-
-body.green-mode {
-    background-color: #e8f5e9;
-    color: #1b5e20;
-}
-
 .chat-container {
-    width: 600px;
-    background-color: rgba(0, 0, 0, 0.8);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-    border-radius: 15px;
+    width: 500px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
     overflow: hidden;
     transition: background-color 0.3s ease;
 }
 
 .chat-container.dark-mode {
-    background-color: rgba(51, 51, 51, 0.8);
-}
-
-.chat-container.blue-mode {
-    background-color: rgba(179, 229, 252, 0.8);
-}
-
-.chat-container.green-mode {
-    background-color: rgba(200, 230, 201, 0.8);
+    background-color: #333333;
 }
 
 .chat-box {
@@ -63,9 +42,8 @@ body.green-mode {
 }
 
 .bot-message {
-    background-color: rgba(224, 224, 224, 0.8);
+    background-color: #e0e0e0;
     text-align: left;
-    color: #000;
 }
 
 .user-message {
@@ -75,7 +53,7 @@ body.green-mode {
 }
 
 #user-input {
-    width: calc(100% - 90px);
+    width: calc(100% - 70px);
     padding: 10px;
     border: none;
     border-top: 1px solid #ddd;
@@ -104,12 +82,6 @@ button:hover {
 #send-button img {
     width: 20px;
     height: 20px;
-}
-
-#theme-toggle, #gif-button {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
 }
 
 #theme-toggle {
