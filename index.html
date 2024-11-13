@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <button id="theme-toggle">🌞</button>
     <div class="chat-container">
         <div class="chat-box" id="chat-box">
             <div class="message bot-message">Hello! I'm Steve, your friendly AI. How can I help you today?</div>
         </div>
-        <input type="text" id="user-input" placeholder="Type a message...">
-        <button id="send-button">Send</button>
+        <input type="text" id="user-input" placeholder="Type a message..." onkeypress="checkEnter(event)">
+        <button id="send-button"><img src="send-icon.png" alt="Send"></button>
     </div>
     <script src="script.js"></script>
 </body>

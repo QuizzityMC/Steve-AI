@@ -1,4 +1,7 @@
-document.getElementById('send-button').addEventListener('click', function() {
+document.getElementById('send-button').addEventListener('click', sendMessage);
+document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+function sendMessage() {
     const userInput = document.getElementById('user-input').value;
     if (userInput) {
         appendMessage(userInput, 'user-message');
@@ -7,7 +10,13 @@ document.getElementById('send-button').addEventListener('click', function() {
             respondToUser(userInput);
         }, 1000);
     }
-});
+}
+
+function checkEnter(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
 
 function appendMessage(text, className) {
     const messageBox = document.createElement('div');
@@ -60,7 +69,6 @@ function respondToUser(input) {
     } else if (input.includes('joke')) {
         response = 'Why did the scarecrow win an award? Because he was outstanding in his field!';
     }
-    
 
     appendMessage(response, 'bot-message');
 }
@@ -69,4 +77,10 @@ function containsSwearWords(input) {
     const swearWords = ['swearword1', 'swearword2', 'swearword3']; // Add more swear words to the list
     return swearWords.some(swearWord => input.includes(swearWord));
 }
- 
+
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    document.querySelector('.chat-container').classList.toggle('dark-mode');
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌜' : '🌞';
+}

@@ -6,6 +6,12 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    transition: background-color 0.3s ease;
+}
+
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #ffffff;
 }
 
 .chat-container {
@@ -14,12 +20,18 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+.chat-container.dark-mode {
+    background-color: #333333;
 }
 
 .chat-box {
     height: 300px;
     padding: 20px;
     overflow-y: auto;
+    transition: color 0.3s ease;
 }
 
 .message {
@@ -57,6 +69,25 @@ body {
     box-sizing: border-box;
 }
 
+#send-button img {
+    width: 20px;
+    height: 20px;
+}
+
 #send-button:hover {
     background-color: #006bbf;
+}
+
+#theme-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#theme-toggle:hover {
+    color: #006bbf;
 }
