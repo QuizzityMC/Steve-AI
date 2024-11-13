@@ -1,29 +1,20 @@
-document.getElementById('send-button').addEventListener('click', () => {
-    console.log('Send button clicked');
-    sendMessage();
-    saveToLocalStorage();
-});
-
-document.getElementById('theme-toggle').addEventListener('click', () => {
-    console.log('Theme toggle clicked');
-    toggleTheme();
-    saveToLocalStorage();
-});
-
-document.getElementById('theme-selector').addEventListener('change', changeTheme);
+document.getElementById('send-button').addEventListener('click', sendMessage);
+document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
 function sendMessage() {
     const userInput = document.getElementById('user-input').value;
-    console.log('User input:', userInput);
     if (userInput) {
         appendMessage(userInput, 'user-message');
         document.getElementById('user-input').value = '';
-        showTypingIndicator();
         setTimeout(() => {
             respondToUser(userInput);
-            hideTypingIndicator();
-            saveToLocalStorage();
         }, 1000);
+    }
+}
+
+function checkEnter(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
     }
 }
 
@@ -110,34 +101,4 @@ function toggleTheme() {
     document.querySelector('.chat-container').classList.toggle('dark-mode');
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌜' : '🌞';
-}
-
-function saveToLocalStorage() {
-    const chatHistory = document.getElementById('chat-box').innerHTML;
-    localStorage.setItem('chatHistory', chatHistory);
-    localStorage.setItem('theme', document.getElementById('theme-selector').value);
-}
-
-function loadFromLocalStorage() {
-    const savedChatHistory = localStorage.getItem('chatHistory');
-    if (savedChatHistory) {
-        document.getElementById('chat-box').innerHTML = savedChatHistory;
-    }
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        document.getElementById('theme-selector').value = savedTheme;
-        changeTheme();
-    }
-}
-
-window.onload = function() {
-    loadFromLocalStorage();
-};
-
-function showTypingIndicator() {
-    document.getElementById('typing-indicator').style.display = 'block';
-}
-
-function hideTypingIndicator() {
-    document.getElementById('typing-indicator').style.display = 'none';
 }
