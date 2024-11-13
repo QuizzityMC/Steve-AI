@@ -8,4 +8,8 @@ One of the files in this repo contains swearwords, in order to filter them out o
 
 ## Features
 
-Simple responses, voice recognition, gifs, emojis,
+Simple responses, night/day mode.
+
+## How to use?
+
+To get started, just say hi! Maybe use some common keywords like help, time, date, weather, travel and more!
