@@ -86,6 +86,8 @@ function respondToUser(input) {
         response = 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?';
     } else if (input.includes('movie') || input.includes('film') || input.includes('cinema')) {
         response = 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?';
+    } else if (input.includes('ok') || input.includes('OK') || input.includes('fine')) {
+        response = 'Thats great, what else can I help you with?'
     }
 
     appendMessage(response, 'bot-message');
