@@ -1,43 +1,94 @@
+/* Body Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Roboto', sans-serif; /* Custom font */
+    background: linear-gradient(135deg, #ececec 0%, #f4f4f4 100%); /* Background gradient */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body.dark-mode {
-    background-color: #1e1e1e;
-    color: #ffffff;
+    background: linear-gradient(135deg, #2c2c2c 0%, #121212 100%);
+    color: #e0e0e0;
 }
 
+/* Chat Container Styles */
 .chat-container {
     width: 400px;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     overflow: hidden;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 1s ease-in-out; /* Fade-in animation */
 }
 
 .chat-container.dark-mode {
     background-color: #333333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
 }
 
+/* Header Styles */
+.header {
+    background-color: #0084ff;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    border-bottom: 2px solid #0073e6;
+}
+
+.header.dark-mode {
+    background-color: #444444;
+    border-bottom: 2px solid #555555;
+}
+
+/* Chat Box Styles */
 .chat-box {
-    height: 350px;
+    height: 300px;
     padding: 20px;
     overflow-y: auto;
+    scroll-behavior: smooth; /* Smooth scroll */
 }
 
+/* Custom Scrollbar */
+.chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background-color: #0084ff;
+    border-radius: 10px;
+}
+
+.chat-box.dark-mode::-webkit-scrollbar-thumb {
+    background-color: #444444;
+}
+
+/* Message Styles */
 .message {
     padding: 10px;
     border-radius: 20px;
     margin-bottom: 10px;
     max-width: 80%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ececec 0%, #f4f4f4 100%); /* Gradient background */
+    animation: fadeInUp 0.5s ease-in-out; /* Fade-in up animation */
+    transition: background-color 0.3s ease;
+}
+
+.message:hover {
+    background-color: #e0e0e0;
+}
+
+.message .timestamp {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin-top: 5px;
 }
 
 .bot-message {
@@ -53,6 +104,7 @@ body.dark-mode {
     align-self: flex-end;
 }
 
+/* Input Container Styles */
 .input-container {
     display: flex;
     padding: 10px;
@@ -61,6 +113,12 @@ body.dark-mode {
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
 }
 
+.input-container.dark-mode {
+    background-color: #444444;
+    border-top: 1px solid #555555;
+}
+
+/* Input Field Styles */
 #user-input {
     flex: 1;
     padding: 10px;
@@ -68,8 +126,25 @@ body.dark-mode {
     border-radius: 20px;
     margin-right: 10px;
     box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+#user-input:focus {
+    border-color: #0084ff;
+    outline: none;
+}
+
+#user-input.dark-mode {
+    background-color: #555555;
+    color: #e0e0e0;
+    border: 1px solid #666666;
+}
+
+#user-input.dark-mode:focus {
+    border-color: #444444;
+}
+
+/* Send Button Styles */
 #send-button {
     width: 45px;
     height: 45px;
@@ -83,6 +158,7 @@ body.dark-mode {
     justify-content: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    animation: bounceIn 0.5s ease-in-out; /* Bounce-in animation */
 }
 
 #send-button img {
@@ -95,6 +171,12 @@ body.dark-mode {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+#send-button.dark-mode {
+    background-color: #333333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Theme Toggle Styles */
 #theme-toggle {
     position: absolute;
     top: 20px;
@@ -103,8 +185,44 @@ body.dark-mode {
     border: none;
     font-size: 24px;
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 #theme-toggle:hover {
     color: #006bbf;
+}
+
+#theme-toggle.dark-mode {
+    color: #e0e0e0;
+}
+
+/* Footer Styles */
+.footer {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 14px;
+    color: #888;
+}
+
+.footer.dark-mode {
+    color: #aaa;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.5); }
+    60% { transform: scale(1.2); }
+    80% { transform: scale(0.9); }
+    100% { transform: scale(1); }
 }

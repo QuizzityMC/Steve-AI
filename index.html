@@ -4,18 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot Steve</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <button id="theme-toggle">🌞</button>
     <div class="chat-container">
+        <header class="header">
+            <h1>Chatbot Steve</h1>
+        </header>
         <div class="chat-box" id="chat-box">
-            <div class="message bot-message">Hello! I'm Steve, your friendly AI. How can I help you today?</div>
+            <div class="message bot-message">
+                <p>Hello! I'm Steve, your friendly AI. How can I help you today?</p>
+                <span class="timestamp">12:00 PM</span>
+            </div>
         </div>
         <div class="input-container">
             <input type="text" id="user-input" placeholder="Type a message..." onkeypress="checkEnter(event)">
             <button id="send-button"><img src="send-icon.png" alt="Send"></button>
         </div>
+    </div>
+    <div class="footer">
+        &copy; QuizzityMC, 2024
     </div>
     <script src="script.js"></script>
 </body>
