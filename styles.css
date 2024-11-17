@@ -14,6 +14,7 @@ body.dark-mode {
     color: #e0e0e0;
 }
 
+
 .chat-container {
     width: 400px;
     background-color: #ffffff;
@@ -21,7 +22,7 @@ body.dark-mode {
     border-radius: 15px;
     overflow: hidden;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 1s ease-in-out; 
 }
 
 .chat-container.dark-mode {
@@ -69,7 +70,7 @@ body.dark-mode {
     margin-bottom: 10px;
     max-width: 80%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #ececec 0%, #f4f4f4 100%);
+    background: linear-gradient(135deg, #ececec 0%, #f4f4f4 100%); 
     animation: fadeInUp 0.5s ease-in-out;
     transition: background-color 0.3s ease;
 }
@@ -149,7 +150,7 @@ body.dark-mode {
     justify-content: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    animation: bounceIn 0.5s ease-in-out;
+    animation: bounceIn 0.5s ease-in-out; 
 }
 
 #send-button img {
