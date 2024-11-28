@@ -11,7 +11,7 @@ body {
 
 body.dark-mode {
     background: linear-gradient(135deg, #2c2c2c 0%, #121212 100%);
-    color: #e0e0e0;
+    color: #2c2c2c;
 }
 
 
@@ -70,7 +70,7 @@ body.dark-mode {
     margin-bottom: 10px;
     max-width: 80%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #ececec 0%, #f4f4f4 100%); 
+    background: #2c2c2c; 
     animation: fadeInUp 0.5s ease-in-out;
     transition: background-color 0.3s ease;
 }
@@ -94,7 +94,7 @@ body.dark-mode {
 
 .user-message {
     background-color: #0084ff;
-    color: #fff;
+    /*color: #fff;*/
     text-align: right;
     align-self: flex-end;
 }
@@ -103,7 +103,7 @@ body.dark-mode {
     display: flex;
     padding: 10px;
     border-top: 1px solid #ddd;
-    background-color: #f4f4f4;
+    /*background-color: #f4f4f4;*/
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
 }
 
