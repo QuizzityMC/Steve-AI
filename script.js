@@ -1,18 +1,32 @@
 document.getElementById('send-button').addEventListener('click', sendMessage);
 document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+document.getElementById('clear-button').addEventListener('click', clearInput);
 
 const userInput = document.getElementById('user-input');
-userInput.addEventListener('keypress', checkEnter);
+const suggestionsBox = document.getElementById('suggestions-box');
+const chatBox = document.getElementById('chat-box');
+let chatHistory = [];
+let lastResponses = [];
+const typingIndicator = document.createElement('div');
+typingIndicator.className = 'typing-indicator';
+typingIndicator.innerText = '...';
 
-let lastResponse = null;
+userInput.addEventListener('keypress', checkEnter);
+userInput.addEventListener('input', showSuggestions);
 
 function sendMessage() {
     if (userInput.value.trim()) {
-        appendMessage(userInput.value, 'user-message');
+         const messageText = userInput.value;
+        appendMessage(messageText, 'user-message');
+        chatHistory.push({sender: 'user', text: messageText})
         userInput.value = '';
         userInput.focus();
+        suggestionsBox.style.display = 'none';
+         chatBox.appendChild(typingIndicator);
+        chatBox.scrollTop = chatBox.scrollHeight;
         setTimeout(() => {
-            respondToUser(userInput.value);
+            respondToUser(messageText);
+             chatBox.removeChild(typingIndicator);
         }, 1000);
     }
 }
@@ -23,18 +37,67 @@ function checkEnter(event) {
     }
 }
 
+
 function appendMessage(text, className) {
     const messageBox = document.createElement('div');
     messageBox.className = `message ${className}`;
-    messageBox.innerText = text;
+        const messageText = document.createElement('p');
+        messageText.innerText = text;
+    messageBox.appendChild(messageText);
+    const copyButton = document.createElement('button');
+    copyButton.innerText = 'Copy';
+    copyButton.className = 'copy-button';
+    copyButton.addEventListener('click', () => copyMessage(text, messageBox));
+
+    messageBox.appendChild(copyButton);
+
     document.getElementById('chat-box').appendChild(messageBox);
-    messageBox.scrollIntoView();
+    messageBox.scrollIntoView({ behavior: 'smooth', block: 'end' });
 }
 
-function respondToUser(input) {
-    let response = "I'm not sure how to respond to that.";
-    input = input.toLowerCase();
-    const responses = {
+function copyMessage(text, messageBox) {
+    navigator.clipboard.writeText(text).then(() => {
+           const originalText = messageBox.querySelector('p').innerText;
+            messageBox.querySelector('p').innerText = "Copied!";
+             setTimeout(() => {
+            messageBox.querySelector('p').innerText = originalText;
+             }, 1000);
+    });
+}
+
+function clearInput(){
+    userInput.value = '';
+    userInput.focus();
+    suggestionsBox.style.display = 'none';
+}
+
+function showSuggestions(){
+     const inputText = userInput.value.toLowerCase();
+      if (inputText.trim() === '') {
+        suggestionsBox.style.display = 'none';
+        return;
+    }
+     const suggestions = Object.keys(responses).filter(key => key.startsWith(inputText)).slice(0,5);
+    if (suggestions.length > 0) {
+        suggestionsBox.innerHTML = '';
+        suggestions.forEach(suggestion => {
+            const suggestionItem = document.createElement('div');
+              suggestionItem.className = 'suggestion-item';
+             suggestionItem.innerText = suggestion;
+            suggestionItem.addEventListener('click', () => {
+                userInput.value = suggestion;
+               userInput.focus();
+                suggestionsBox.style.display = 'none';
+            });
+            suggestionsBox.appendChild(suggestionItem);
+        });
+        suggestionsBox.style.display = 'block';
+    } else {
+        suggestionsBox.style.display = 'none';
+    }
+}
+
+const responses = {
         'hello': ['Hello to you too!', 'Hi there!', 'Hey!'],
         'hi': ['Hello to you too!', 'Hi there!', 'Hey!'],
         'hey': ['Hello to you too!', 'Hi there!', 'Hey!'],
@@ -117,22 +180,41 @@ function respondToUser(input) {
          'fine': ['Thats great, what else can I help you with?', 'Ok sounds good, what else can I do?', 'Sounds great, how can I help?'],
     };
 
+function respondToUser(input) {
+     let response = "I'm not sure how to respond to that.";
+     input = input.toLowerCase();
+    let lastUserMessage = chatHistory.filter(msg => msg.sender === 'user').slice(-1)[0];
+    let context = lastUserMessage ? lastUserMessage.text : '';
+
       if (responses[input]) {
             let possibleResponses = responses[input];
           if(possibleResponses.length === 1){
                 response = possibleResponses[0];
           } else {
-            let validResponses = possibleResponses.filter(res => res !== lastResponse);
+            let validResponses = possibleResponses.filter(res => !lastResponses.includes(res));
+             if(validResponses.length === 0){
+                validResponses = possibleResponses;
+                lastResponses = [];
+             }
                 response = validResponses[Math.floor(Math.random() * validResponses.length)];
+                lastResponses.push(response)
+               if(lastResponses.length > 3){
+                lastResponses.shift();
             }
-            lastResponse = response;
-          } else if(containsSwearWords(input)){
+             }
+          }
+       else if(containsSwearWords(input)){
              response = 'Excuse me, that goes against my community guidelines, please rephrase your prompt and try again.';
           }
-
+    else if(context.includes('space') && input.includes('planets')){
+        response = 'Planets are celestial bodies that orbit a star and typically have sufficient mass for their own gravity.';
+    }
+        else if(context.includes('music') && input.includes('recommend')){
+             response = 'I’m sorry, I cannot provide music recommendations at this moment. Please try another prompt or request.';
+        }
     appendMessage(response, 'bot-message');
+       chatHistory.push({sender: 'bot', text: response});
 }
-
 
 function containsSwearWords(input) {
     const swearWords = ['bitch', 'fuck', 'fucking', 'cunt', 'shit', 'nigga', 'chink', 'whore', 'slut', 'dick', 'pussy', 'motherfucker' , 'fucker', 'bullshit', 'ass' , 'dickhead' , 'dumbass' , 'wanker', 'cotton picker'];
@@ -143,9 +225,29 @@ function containsSwearWords(input) {
 function toggleTheme() {
     document.body.classList.toggle('dark-mode');
     document.querySelector('.chat-container').classList.toggle('dark-mode');
-     document.querySelectorAll('.input-container, #user-input').forEach(element => {
+     document.querySelectorAll('.input-container, #user-input, .suggestions-box').forEach(element => {
         element.classList.toggle('dark-mode')
       });
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌜' : '🌞';
 }
+
+
+window.onload = function() {
+    try{
+        const savedHistory = localStorage.getItem('chatHistory');
+        if(savedHistory){
+           chatHistory = JSON.parse(savedHistory);
+            chatHistory.forEach(msg => {
+                appendMessage(msg.text, msg.sender + '-message')
+            })
+        }
+    }
+        catch(e){
+            console.log("No saved history.");
+        }
+  };
+  
+  window.addEventListener('beforeunload', function () {
+      localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+  });
