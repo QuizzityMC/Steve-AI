@@ -69,6 +69,7 @@ body.dark-mode {
     padding: 20px;
     overflow-y: auto;
     scroll-behavior: smooth;
+    position: relative;
 }
 
 .chat-box::-webkit-scrollbar {
@@ -93,6 +94,8 @@ body.dark-mode {
     background: var(--background-light);
     animation: fadeInUp 0.5s ease-in-out;
     transition: background-color var(--transition-duration) ease;
+     display: flex;
+    justify-content: space-between;
 }
 
 .message:hover {
@@ -118,6 +121,12 @@ body.dark-mode {
     text-align: right;
     align-self: flex-end;
 }
+
+.input-area{
+    display: flex;
+    flex-direction: column;
+}
+
 
 .input-container {
     display: flex;
@@ -159,6 +168,34 @@ body.dark-mode {
     border-color: var(--hover-color-dark);
 }
 
+
+#clear-button {
+    width: 45px;
+    height: 45px;
+    background-color: #ddd;
+    color: #333;
+    border: none;
+     border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+    margin-right: 10px;
+}
+
+#clear-button img {
+    width: 20px;
+    height: 20px;
+}
+
+#clear-button:hover {
+     background-color: #bbb;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
 #send-button {
     width: 45px;
     height: 45px;
@@ -172,7 +209,7 @@ body.dark-mode {
     justify-content: center;
     box-shadow: 0 2px 5px var(--shadow-color-light);
     transition: background-color var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
-    animation: bounceIn 0.5s ease-in-out;
+     animation: bounceIn 0.5s ease-in-out;
 }
 
 #send-button img {
@@ -202,38 +239,4 @@ body.dark-mode {
 }
 
 #theme-toggle:hover {
-    color: var(--primary-color-darker);
-}
-
-#theme-toggle.dark-mode {
-    color: var(--text-color-dark);
-}
-
-.footer {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    font-size: 14px;
-    color: #888;
-}
-
-.footer.dark-mode {
-    color: var(--text-color-dark);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes bounceIn {
-    0% { transform: scale(0.5); }
-    60% { transform: scale(1.2); }
-    80% { transform: scale(0.9); }
-    100% { transform: scale(1); }
-}
+    color: var(--primary-color
