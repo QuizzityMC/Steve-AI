@@ -1,13 +1,17 @@
 document.getElementById('send-button').addEventListener('click', sendMessage);
 document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
+const userInput = document.getElementById('user-input');
+
+userInput.addEventListener('keypress', checkEnter);
+
 function sendMessage() {
-    const userInput = document.getElementById('user-input').value;
-    if (userInput) {
-        appendMessage(userInput, 'user-message');
-        document.getElementById('user-input').value = '';
+    if (userInput.value.trim()) {
+        appendMessage(userInput.value, 'user-message');
+        userInput.value = '';
+        userInput.focus();
         setTimeout(() => {
-            respondToUser(userInput);
+            respondToUser(userInput.value);
         }, 1000);
     }
 }
@@ -29,65 +33,92 @@ function appendMessage(text, className) {
 function respondToUser(input) {
     let response = "I'm not sure how to respond to that.";
     input = input.toLowerCase();
-
-    if (input.includes('hello') || input.includes('hi') || input.includes('hey') || input.includes('heya')) {
-        response = 'Hello to you too!';
-    } else if (input.includes('can we') || input.includes('could we') || input.includes('should we')) {
-        response = 'Of course, why not!';
-    } else if (containsSwearWords(input)) {
+    const responses = {
+        'hello': 'Hello to you too!',
+        'hi': 'Hello to you too!',
+        'hey': 'Hello to you too!',
+         'heya': 'Hello to you too!',
+        'can we': 'Of course, why not!',
+        'could we': 'Of course, why not!',
+        'should we': 'Of course, why not!',
+        'how are you': 'I’m just a bunch of code, but thanks for asking! How about you?',
+        'how do you do': 'I’m just a bunch of code, but thanks for asking! How about you?',
+         'how have you been': 'I’m just a bunch of code, but thanks for asking! How about you?',
+        'what can you do': 'I can chat with you, answer questions, and keep you company!',
+         'what are your skills': 'I can chat with you, answer questions, and keep you company!',
+          'what are your abilities': 'I can chat with you, answer questions, and keep you company!',
+        'tell me a joke': 'Why don’t scientists trust atoms? Because they make up everything!',
+         'make me laugh': 'Why don’t scientists trust atoms? Because they make up everything!',
+          'say something funny': 'Why don’t scientists trust atoms? Because they make up everything!',
+        'bye': 'Goodbye! Have a great day!',
+        'goodbye': 'Goodbye! Have a great day!',
+        'see you later': 'Goodbye! Have a great day!',
+         'farewell': 'Goodbye! Have a great day!',
+        'what is your name': 'I’m Steve, your friendly AI assistant.',
+        'who are you': 'I’m Steve, your friendly AI assistant.',
+         'what do I call you': 'I’m Steve, your friendly AI assistant.',
+        'time': new Date().toLocaleTimeString(),
+         'what time is it': new Date().toLocaleTimeString(),
+         'current time': new Date().toLocaleTimeString(),
+        'date': new Date().toLocaleDateString(),
+         'what is the date': new Date().toLocaleDateString(),
+          'current date': new Date().toLocaleDateString(),
+        'weather': 'I’m sorry, I cannot provide weather information at the moment.',
+        'news': 'I’m sorry, I cannot provide news information at the moment. Please visit https://www.abc.net.au/.',
+        'music': 'I’m sorry, I cannot play music at the moment.',
+         'play a song': 'I’m sorry, I cannot play music at the moment.',
+          'music recommendations': 'I’m sorry, I cannot play music at the moment.',
+        'write me': 'I’m sorry, I can’t help you write that. Here is a Haiku: The light of the moon, It shines on the dark water, The night is silent.',
+        'compose': 'I’m sorry, I can’t help you write that. Here is a Haiku: The light of the moon, It shines on the dark water, The night is silent.',
+         'create text': 'I’m sorry, I can’t help you write that. Here is a Haiku: The light of the moon, It shines on the dark water, The night is silent.',
+        'colour': 'I like all colours, but I think blue is my favourite.',
+         'color': 'I like all colours, but I think blue is my favourite.',
+         'favorite color': 'I like all colours, but I think blue is my favourite.',
+        'food': 'I’m sorry, I cannot provide food information at the moment.',
+        'recipe': 'I’m sorry, I cannot provide food information at the moment.',
+         'meal': 'I’m sorry, I cannot provide food information at the moment.',
+        'meaning of life': 'There is no meaning in life except life itself.',
+         'purpose of life': 'There is no meaning in life except life itself.',
+          'life meaning': 'There is no meaning in life except life itself.',
+        'love': 'I love you too!',
+        'do you love me': 'I love you too!',
+         'what is love': 'I love you too!',
+         'joke': 'Why did the scarecrow win an award? Because he was outstanding in his field!',
+         'help': 'How can I assist you today?',
+          'assist': 'How can I assist you today?',
+          'support': 'How can I assist you today?',
+        'quote': 'Here’s a quote for you: "The only way to do great work is to love what you do." - Steve Jobs',
+         'inspire me': 'Here’s a quote for you: "The only way to do great work is to love what you do." - Steve Jobs',
+          'motivational quote': 'Here’s a quote for you: "The only way to do great work is to love what you do." - Steve Jobs',
+        'fact': 'Did you know? Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.',
+         'interesting fact': 'Did you know? Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.',
+         'did you know': 'Did you know? Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.',
+        'advice': 'Always be kind to others and treat them as you would like to be treated.',
+         'suggestion': 'Always be kind to others and treat them as you would like to be treated.',
+         'recommendation': 'Always be kind to others and treat them as you would like to be treated.',
+         'story': 'Once upon a time, in a land far away, there lived a curious AI named Steve who loved to chat with humans and learn new things every day.',
+         'tell me a story': 'Once upon a time, in a land far away, there lived a curious AI named Steve who loved to chat with humans and learn new things every day.',
+          'narrate': 'Once upon a time, in a land far away, there lived a curious AI named Steve who loved to chat with humans and learn new things every day.',
+         'philosophy': 'Philosophy is the study of the fundamental nature of knowledge, reality, and existence. It asks big questions about life, the universe, and everything.',
+         'philosophical': 'Philosophy is the study of the fundamental nature of knowledge, reality, and existence. It asks big questions about life, the universe, and everything.',
+          'deep thoughts': 'Philosophy is the study of the fundamental nature of knowledge, reality, and existence. It asks big questions about life, the universe, and everything.',
+         'programming': 'Programming is the process of creating a set of instructions that tell a computer how to perform a task. It’s a crucial skill in today’s technology-driven world.',
+          'coding': 'Programming is the process of creating a set of instructions that tell a computer how to perform a task. It’s a crucial skill in today’s technology-driven world.',
+         'developing software': 'Programming is the process of creating a set of instructions that tell a computer how to perform a task. It’s a crucial skill in today’s technology-driven world.',
+         'travel': 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?',
+         'vacation': 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?',
+          'trip': 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?',
+         'movie': 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?',
+         'film': 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?',
+         'cinema': 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?',
+         'ok': 'Thats great, what else can I help you with?',
+          'OK': 'Thats great, what else can I help you with?',
+         'fine': 'Thats great, what else can I help you with?',
+    };
+    if (responses[input]) {
+        response = responses[input];
+    } else if(containsSwearWords(input)){
         response = 'Excuse me, that goes against my community guidelines, please rephrase your prompt and try again.';
-    } else if (input.includes('how are you') || input.includes('how do you do') || input.includes('how have you been')) {
-        response = 'I’m just a bunch of code, but thanks for asking! How about you?';
-    } else if (input.includes('what can you do') || input.includes('what are your skills') || input.includes('what are your abilities')) {
-        response = 'I can chat with you, answer questions, and keep you company!';
-    } else if (input.includes('tell me a joke') || input.includes('make me laugh') || input.includes('say something funny')) {
-        response = 'Why don’t scientists trust atoms? Because they make up everything!';
-    } else if (input.includes('bye') || input.includes('goodbye') || input.includes('see you later') || input.includes('farewell')) {
-        response = 'Goodbye! Have a great day!';
-    } else if (input.includes('what is your name') || input.includes('who are you') || input.includes('what do I call you')) {
-        response = 'I’m Steve, your friendly AI assistant.';
-    } else if (input.includes('time') || input.includes('what time is it') || input.includes('current time')) {
-        response = new Date().toLocaleTimeString();
-    } else if (input.includes('date') || input.includes('what is the date') || input.includes('current date')) {
-        response = new Date().toLocaleDateString();
-    } else if (input.includes('weather')) {
-        response = 'I’m sorry, I cannot provide weather information at the moment.';
-    } else if (input.includes('news')) {
-        response = 'I’m sorry, I cannot provide news information at the moment. Please visit https://www.abc.net.au/.';
-    } else if (input.includes('music') || input.includes('play a song') || input.includes('music recommendations')) {
-        response = 'I’m sorry, I cannot play music at the moment.';
-    } else if (input.includes('write me') || input.includes('compose') || input.includes('create text')) {
-        response = 'I’m sorry, I can’t help you write that. Here is a Haiku: The light of the moon, It shines on the dark water, The night is silent.';
-    } else if (input.includes('colour') || input.includes('color') || input.includes('favorite color')) {
-        response = 'I like all colours, but I think blue is my favourite.';
-    } else if (input.includes('food') || input.includes('recipe') || input.includes('meal')) {
-        response = 'I’m sorry, I cannot provide food information at the moment.';
-    } else if (input.includes('meaning of life') || input.includes('purpose of life') || input.includes('life meaning')) {
-        response = 'There is no meaning in life except life itself.';
-    } else if (input.includes('love') || input.includes('do you love me') || input.includes('what is love')) {
-        response = 'I love you too!';
-    } else if (input.includes('joke')) {
-        response = 'Why did the scarecrow win an award? Because he was outstanding in his field!';
-    } else if (input.includes('help') || input.includes('assist') || input.includes('support')) {
-        response = 'How can I assist you today?';
-    } else if (input.includes('quote') || input.includes('inspire me') || input.includes('motivational quote')) {
-        response = 'Here’s a quote for you: "The only way to do great work is to love what you do." - Steve Jobs';
-    } else if (input.includes('fact') || input.includes('interesting fact') || input.includes('did you know')) {
-        response = 'Did you know? Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.';
-    } else if (input.includes('advice') || input.includes('suggestion') || input.includes('recommendation')) {
-        response = 'Always be kind to others and treat them as you would like to be treated.';
-    } else if (input.includes('story') || input.includes('tell me a story') || input.includes('narrate')) {
-        response = 'Once upon a time, in a land far away, there lived a curious AI named Steve who loved to chat with humans and learn new things every day.';
-    } else if (input.includes('philosophy') || input.includes('philosophical') || input.includes('deep thoughts')) {
-        response = 'Philosophy is the study of the fundamental nature of knowledge, reality, and existence. It asks big questions about life, the universe, and everything.';
-    } else if (input.includes('programming') || input.includes('coding') || input.includes('developing software')) {
-        response = 'Programming is the process of creating a set of instructions that tell a computer how to perform a task. It’s a crucial skill in today’s technology-driven world.';
-    } else if (input.includes('travel') || input.includes('vacation') || input.includes('trip')) {
-        response = 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?';
-    } else if (input.includes('movie') || input.includes('film') || input.includes('cinema')) {
-        response = 'Traveling opens your mind to new cultures, experiences, and perspectives. Where would you like to go next?';
-    } else if (input.includes('ok') || input.includes('OK') || input.includes('fine')) {
-        response = 'Thats great, what else can I help you with?';
     }
 
     appendMessage(response, 'bot-message');
@@ -95,12 +126,17 @@ function respondToUser(input) {
 
 function containsSwearWords(input) {
     const swearWords = ['bitch', 'fuck', 'fucking', 'cunt', 'shit', 'nigga', 'chink', 'whore', 'slut', 'dick', 'pussy', 'motherfucker' , 'fucker', 'bullshit', 'ass' , 'dickhead' , 'dumbass' , 'wanker', 'cotton picker'];
-    return swearWords.some(swearWord => input.includes(swearWord));
+    const regex = new RegExp(swearWords.join('|'), 'i');
+    return regex.test(input);
 }
 
 function toggleTheme() {
     document.body.classList.toggle('dark-mode');
     document.querySelector('.chat-container').classList.toggle('dark-mode');
+    document.querySelectorAll('.input-container, #user-input').forEach(element => {
+        element.classList.toggle('dark-mode')
+      });
+    
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌜' : '🌞';
 }
